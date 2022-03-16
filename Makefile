@@ -19,22 +19,7 @@ endif
 KERNELS = bc bfs cc cc_sv pr pr_spmv sssp tc
 SUITE = $(KERNELS) converter
 
-.PHONY: all
-all: $(SUITE)
-
-% : src/%.cc src/*.h
-	$(CXX) $(CXX_FLAGS) $< -o $@
-
-# Testing
-include test/test.mk
-
-# Benchmark Automation
-include benchmark/bench.mk
-
-
-.PHONY: clean
-clean:
-	rm -f $(SUITE) test/out/*
+.PHONY: all build-gapbs
 
 DIR=${CURDIR}/..
 GCC_LIB=$(DIR)/gcc-build-cpp/x86_64-pc-linux-gnu/libgcc/
@@ -64,4 +49,20 @@ build-gapbs:
 		$(CPP_LIB) $(MATH_LIB) \
 		--start-group $(SYS_LIBS) $(C_LIB) --end-group $(CRT_ENDS)
 	rm -rf *_tmp.o
+
+all: $(SUITE)
+
+% : src/%.cc src/*.h
+	$(CXX) $(CXX_FLAGS) $< -o $@
+
+# Testing
+include test/test.mk
+
+# Benchmark Automation
+include benchmark/bench.mk
+
+
+.PHONY: clean
+clean:
+	rm -f $(SUITE) test/out/*
 
