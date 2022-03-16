@@ -14,7 +14,6 @@
 #include "sliding_queue.h"
 #include "timer.h"
 
-
 /*
 GAP Benchmark Suite
 Kernel: Breadth-First Search (BFS)
@@ -241,7 +240,8 @@ bool BFSVerifier(const Graph &g, NodeID source,
 }
 
 
-int main(int argc, char* argv[]) {
+int bfs(int argc, char* argv[]) {
+  optind = 1;
   CLApp cli(argc, argv, "breadth-first search");
   if (!cli.ParseArgs())
     return -1;

@@ -1,7 +1,7 @@
 # See LICENSE.txt for license details.
 
 CXX_FLAGS += -std=c++11 -O3 -Wall
-PAR_FLAG = -fopenmp
+PAR_FLAG = -fno-openmp
 
 ifneq (,$(findstring icpc,$(CXX)))
 	PAR_FLAG = -openmp
@@ -35,3 +35,33 @@ include benchmark/bench.mk
 .PHONY: clean
 clean:
 	rm -f $(SUITE) test/out/*
+
+DIR=${CURDIR}/..
+GCC_LIB=$(DIR)/gcc-build-cpp/x86_64-pc-linux-gnu/libgcc/
+LC_DIR=$(DIR)/glibc-build/
+CRT_LIB=$(LC_DIR)csu/
+C_LIB=$(LC_DIR)libc.a
+PTHREAD_LIB=$(LC_DIR)nptl/libpthread.a
+RT_LIB=$(LC_DIR)rt/librt.a
+MATH_LIB=$(LC_DIR)math/libm.a
+CRT_STARTS=$(CRT_LIB)crt1.o $(CRT_LIB)crti.o $(GCC_LIB)crtbeginT.o
+CRT_ENDS=$(GCC_LIB)crtend.o $(CRT_LIB)crtn.o
+SYS_LIBS=$(GCC_LIB)libgcc.a $(GCC_LIB)libgcc_eh.a
+CPP_LIB=$(DIR)/gcc-build-cpp/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.a
+
+
+build-gapbs:
+	- rm -rf gapbs
+	g++ -c -o bfs_tmp.o src/bfs.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o sssp_tmp.o src/sssp.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o pr_tmp.o src/pr.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o cc_tmp.o src/cc.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o bc_tmp.o src/bc.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o tc_tmp.o src/tc.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o main_tmp.o src/main.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	ld -static --allow-multiple-definition -o gapbs $(CRT_STARTS) main_tmp.o \
+		bfs_tmp.o sssp_tmp.o pr_tmp.o cc_tmp.o bc_tmp.o tc_tmp.o \
+		$(CPP_LIB) $(MATH_LIB) \
+		--start-group $(SYS_LIBS) $(C_LIB) --end-group $(CRT_ENDS)
+	rm -rf *_tmp.o
+

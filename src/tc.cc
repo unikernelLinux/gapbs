@@ -17,7 +17,6 @@
 #include "graph.h"
 #include "pvector.h"
 
-
 /*
 GAP Benchmark Suite
 Kernel: Triangle Counting (TC)
@@ -128,7 +127,8 @@ bool TCVerifier(const Graph &g, size_t test_total) {
 }
 
 
-int main(int argc, char* argv[]) {
+int tc(int argc, char* argv[]) {
+  optind = 1;
   CLApp cli(argc, argv, "triangle count");
   if (!cli.ParseArgs())
     return -1;

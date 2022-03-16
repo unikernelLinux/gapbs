@@ -16,7 +16,6 @@
 #include "timer.h"
 #include "util.h"
 
-
 /*
 GAP Benchmark Suite
 Kernel: Betweenness Centrality (BC)
@@ -226,7 +225,8 @@ bool BCVerifier(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters,
 }
 
 
-int main(int argc, char* argv[]) {
+int bc(int argc, char* argv[]) {
+  optind = 1;
   CLIterApp cli(argc, argv, "betweenness-centrality", 1);
   if (!cli.ParseArgs())
     return -1;

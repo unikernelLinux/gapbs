@@ -15,7 +15,6 @@
 #include "pvector.h"
 #include "timer.h"
 
-
 /*
 GAP Benchmark Suite
 Kernel: Connected Components (CC)
@@ -215,7 +214,8 @@ bool CCVerifier(const Graph &g, const pvector<NodeID> &comp) {
 }
 
 
-int main(int argc, char* argv[]) {
+int cc(int argc, char* argv[]) {
+  optind = 1;
   CLApp cli(argc, argv, "connected-components-afforest");
   if (!cli.ParseArgs())
     return -1;

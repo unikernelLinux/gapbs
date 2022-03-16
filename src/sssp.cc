@@ -15,7 +15,6 @@
 #include "pvector.h"
 #include "timer.h"
 
-
 /*
 GAP Benchmark Suite
 Kernel: Single-source Shortest Paths (SSSP)
@@ -191,7 +190,8 @@ bool SSSPVerifier(const WGraph &g, NodeID source,
 }
 
 
-int main(int argc, char* argv[]) {
+int sssp(int argc, char* argv[]) {
+  optind = 1;
   CLDelta<WeightT> cli(argc, argv, "single-source shortest-path");
   if (!cli.ParseArgs())
     return -1;
