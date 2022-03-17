@@ -12,7 +12,23 @@ extern int cc(int argc, char* argv[]);
 extern int bc(int argc, char* argv[]);
 extern int tc(int argc, char* argv[]);
 
+char one[] = "./gapbs";
+char two[] = "-g";
+char three[] = "20";
+char four[] = "-n";
+char five[] = "5";
+
+char *myarr[5];
+
 int main(int argc, char* argv[]){
+	myarr[0] = (char *) &one;
+	myarr[1] = (char *) &two;
+	myarr[2] = (char *) &three;
+	myarr[3] = (char *) &four;
+	myarr[4] = (char *) &five;
+
+	argc = 5;
+	argv = myarr;
 
 	std::cout << "\n*****************************************************************" << std::endl;
 	std::cout << "******************************B F S******************************" << std::endl;
