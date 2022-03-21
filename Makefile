@@ -22,7 +22,7 @@ SUITE = $(KERNELS) converter
 .PHONY: all build-gapbs
 
 DIR=${CURDIR}/..
-GCC_LIB=$(DIR)/gcc-build-cpp/x86_64-pc-linux-gnu/libgcc/
+GCC_LIB=$(DIR)/gcc-build/x86_64-pc-linux-gnu/libgcc/
 LC_DIR=$(DIR)/glibc-build/
 CRT_LIB=$(LC_DIR)csu/
 C_LIB=$(LC_DIR)libc.a
@@ -31,7 +31,7 @@ RT_LIB=$(LC_DIR)rt/librt.a
 MATH_LIB=$(LC_DIR)math/libm.a
 CRT_STARTS=$(CRT_LIB)crt1.o $(CRT_LIB)crti.o $(GCC_LIB)crtbeginT.o
 CRT_ENDS=$(GCC_LIB)crtend.o $(CRT_LIB)crtn.o
-SYS_LIBS=$(GCC_LIB)libgcc.a #$(GCC_LIB)libgcc_eh.a
+SYS_LIBS=$(GCC_LIB)libgcc.a $(GCC_LIB)libgcc_eh.a
 CPP_LIB=$(DIR)/gcc-build-cpp/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.a
 
 
