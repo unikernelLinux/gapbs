@@ -1,6 +1,6 @@
 # See LICENSE.txt for license details.
 
-CXX_FLAGS += -std=c++11 -O3 -Wall
+CXX_FLAGS += -O3 -Wall -ggdb -mno-red-zone
 PAR_FLAG = -fno-openmp
 
 ifneq (,$(findstring icpc,$(CXX)))
@@ -37,13 +37,13 @@ CPP_LIB=$(DIR)/gcc-build-cpp/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc+
 
 build-gapbs:
 	- rm -rf gapbs
-	g++ -c -o bfs_tmp.o src/bfs.cc -ggdb -mno-red-zone $(CXX_FLAGS)
-	g++ -c -o sssp_tmp.o src/sssp.cc -ggdb -mno-red-zone $(CXX_FLAGS)
-	g++ -c -o pr_tmp.o src/pr.cc -ggdb -mno-red-zone $(CXX_FLAGS)
-	g++ -c -o cc_tmp.o src/cc.cc -ggdb -mno-red-zone $(CXX_FLAGS)
-	g++ -c -o bc_tmp.o src/bc.cc -ggdb -mno-red-zone $(CXX_FLAGS)
-	g++ -c -o tc_tmp.o src/tc.cc -ggdb -mno-red-zone $(CXX_FLAGS)
-	g++ -c -o main_tmp.o src/main.cc -ggdb -mno-red-zone $(CXX_FLAGS)
+	g++ -c -o bfs_tmp.o src/bfs.cc $(CXX_FLAGS)
+	g++ -c -o sssp_tmp.o src/sssp.cc $(CXX_FLAGS)
+	g++ -c -o pr_tmp.o src/pr.cc $(CXX_FLAGS)
+	g++ -c -o cc_tmp.o src/cc.cc $(CXX_FLAGS)
+	g++ -c -o bc_tmp.o src/bc.cc $(CXX_FLAGS)
+	g++ -c -o tc_tmp.o src/tc.cc $(CXX_FLAGS)
+	g++ -c -o main_tmp.o src/main.cc $(CXX_FLAGS)
 	ld -static --allow-multiple-definition -o gapbs $(CRT_STARTS) main_tmp.o \
 		bfs_tmp.o sssp_tmp.o pr_tmp.o cc_tmp.o bc_tmp.o tc_tmp.o \
 		$(CPP_LIB) $(MATH_LIB) \
