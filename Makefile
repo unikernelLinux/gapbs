@@ -46,7 +46,7 @@ build-gapbs:
 	g++ -c -o main_tmp.o src/main.cc $(CXX_FLAGS)
 	ld -r -o gapbs.ukl --allow-multiple-definition $(CRT_STARTS) main_tmp.o \
 		bfs_tmp.o sssp_tmp.o pr_tmp.o cc_tmp.o bc_tmp.o tc_tmp.o \
-		--start-group --whole-archive $(CPP_LIB) $(MATH_LIB) \
+		--start-group --whole-archive $(CPP_LIB) $(MATH_LIB) $(PTHREAD_LIB) \
 		$(C_LIB) --no-whole-archive $(SYS_LIBS) --end-group $(CRT_ENDS)
 	rm -rf *_tmp.o
 	ar cr UKL.a gapbs.ukl ../undefined_sys_hack.o
